@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Example {
+    id String @id @default(cuid())
+}
+
+// Neccessary for Next auth
+model Account {
+    id                Int     @id @default(autoincrement())
+    userId            Int
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+}
+
+model Session {
+    id           Int      @id @default(autoincrement())
+    sessionToken String   @unique
+    userId       Int
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+    id       Int       @id @default(autoincrement())
+    name     String?
+    email    String?   @unique
+    accounts Account[]
+    sessions Session[]
+    Issue    Issue[]
+}
+
+model Issue {
+    id         Int      @id @default(autoincrement())
+    title      String
+    content    String
+    userid     Int
+    author     User     @relation(fields: [userid], references: [id], onDelete: Cascade)
+    categoryId Int
+    Category   Category @relation(fields: [categoryId], references: [id])
+    done       Boolean  @default(false)
+    Project    Project? @relation(fields: [projectId], references: [id])
+    projectId  Int?
+}
+
+model Category {
+    id     Int     @id @default(autoincrement())
+    name   String
+    Issues Issue[]
+}
+
+model Project {
+    id     Int     @id @default(autoincrement())
+    name   String
+    Issues Issue[]
+}
