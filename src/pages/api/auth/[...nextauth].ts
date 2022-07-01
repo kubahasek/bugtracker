@@ -8,6 +8,9 @@ import { prisma } from "../../../server/db/client";
 export default NextAuth({
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: "/signin",
+  },
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,

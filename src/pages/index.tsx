@@ -1,8 +1,13 @@
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
+  const session = useSession({ required: true });
+
   return (
     <>
       <Head>
