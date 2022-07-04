@@ -3,11 +3,13 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import IssueCard from "../../components/IssueCard";
 import Navbar from "../../components/Navbar";
 import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
   const session = useSession({ required: true });
+  const issues = trpc.useQuery(["app.getIssues"]);
 
   return (
     <>
@@ -19,7 +21,22 @@ const Home: NextPage = () => {
       <nav>
         <Navbar />
       </nav>
-      <main></main>
+      <main>
+        <div className="w-9/12 mx-auto mt-4">
+          <h1 className="dark:text-white text-3xl text-center uppercase">
+            Issues
+          </h1>
+          {issues.data ? (
+            <ul>
+              {issues.data.map((issue) => (
+                <IssueCard key={issue.id} issue={issue} />
+              ))}
+            </ul>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
+      </main>
     </>
   );
 };

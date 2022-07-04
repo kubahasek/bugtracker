@@ -62,8 +62,8 @@ model Issue {
     categoryId Int
     Category   Category @relation(fields: [categoryId], references: [id])
     done       Boolean  @default(false)
-    Project    Project? @relation(fields: [projectId], references: [id])
-    projectId  Int?
+    Project    Project  @relation(fields: [projectId], references: [id])
+    projectId  Int
 }
 
 model Category {
