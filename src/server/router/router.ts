@@ -24,6 +24,16 @@ export const Router = createRouter()
       return projects;
     },
   })
+  .query("getIssue", {
+    input: z.number(),
+    async resolve(input) {
+      const issue = await db.issue.findUnique({
+        where: { id: input.input },
+        include: { Project: true, author: true, Category: true },
+      });
+      return issue;
+    },
+  })
   .mutation("createIssue", {
     input: z.object({
       title: z.string().min(1),
@@ -37,5 +47,17 @@ export const Router = createRouter()
         data: input,
       });
       return issue;
+    },
+  })
+  .mutation("solveIssue", {
+    input: z.object({
+      id: z.number().min(1),
+    }),
+    async resolve({ input }) {
+      const issue = await db.issue.update({
+        where: { id: input.id },
+        data: { done: true },
+      });
+      return { ok: true };
     },
   });

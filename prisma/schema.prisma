@@ -51,12 +51,14 @@ model User {
     accounts      Account[]
     sessions      Session[]
     Issue         Issue[]
+    Reply         Reply[]
 }
 
 model Issue {
     id         Int      @id @default(autoincrement())
     title      String
-    content    String
+    content    String   @db.VarChar(4000)
+    createdAt  DateTime @default(now())
     userid     Int
     author     User     @relation(fields: [userid], references: [id], onDelete: Cascade)
     categoryId Int
@@ -64,6 +66,7 @@ model Issue {
     done       Boolean  @default(false)
     Project    Project  @relation(fields: [projectId], references: [id])
     projectId  Int
+    Reply      Reply[]
 }
 
 model Category {
@@ -76,4 +79,14 @@ model Project {
     id     Int     @id @default(autoincrement())
     name   String
     Issues Issue[]
+}
+
+model Reply {
+    id        Int      @id @default(autoincrement())
+    content   String
+    userid    Int
+    author    User     @relation(fields: [userid], references: [id], onDelete: Cascade)
+    Issue     Issue    @relation(fields: [issueId], references: [id])
+    issueId   Int
+    createdAt DateTime @default(now())
 }
