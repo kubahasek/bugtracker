@@ -18,6 +18,7 @@ const IssueDetail: NextPage = () => {
   const solveMutation = trpc.useMutation(["app.solveIssue"]);
 
   const issue = trpc.useQuery(["app.getIssue", parseInt(id.toString())]);
+  const issueId = parseInt(id.toString());
 
   const markSolved = (issueId: number) => {
     solveMutation.mutate({ id: issueId });
@@ -75,7 +76,8 @@ const IssueDetail: NextPage = () => {
             </div>
             <div
               className="btn btn-success flex items-center w-4/5 mx-auto mt-4"
-              onClick={() => markSolved(issue.data.id)}
+              onClick={() => markSolved(issueId)}
+              {...(issue.data.done ? { disabled: true } : {})}
             >
               Mark as solved
             </div>
