@@ -95,6 +95,7 @@ const New: NextPage = () => {
               <select
                 className="shadow bg-gray-500 appearance-none border-none rounded w-full py-2 px-3 text-gray-300 leading-tight focus:shadow-outline"
                 id="projectId"
+                required
               >
                 <option>Select a project</option>
                 {projects.data?.map((project) => (
@@ -107,6 +108,11 @@ const New: NextPage = () => {
             <button type="submit" className="btn w-full mt-8">
               Submit
             </button>
+            {mutation.error && (
+              <p className="mt-4 text-error">
+                Something went wrong! Please check the form and try again!
+              </p>
+            )}
           </form>
         </div>
       </main>
