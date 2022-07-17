@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import IssueCard from "../../components/IssueCard";
 import Navbar from "../../components/Navbar";
 import { trpc } from "../utils/trpc";
@@ -10,6 +11,7 @@ import { trpc } from "../utils/trpc";
 const Home: NextPage = () => {
   const session = useSession({ required: true });
   const issues = trpc.useQuery(["app.getIssues"]);
+  const [displayClosed, setDisplayClosed] = useState(false);
 
   return (
     <>
@@ -26,11 +28,27 @@ const Home: NextPage = () => {
           <h1 className="dark:text-white text-3xl text-center uppercase">
             Issues
           </h1>
+          <div className="text-center mb-4">
+            <label htmlFor="" className="flex flex-col items-center">
+              Display closed issues
+              <input
+                type="checkbox"
+                name="displayClosed"
+                className="mt-2"
+                id=""
+                onClick={() => setDisplayClosed(!displayClosed)}
+              />
+            </label>
+          </div>
           {issues.data ? (
             <ul>
-              {issues.data.map((issue) => (
-                <IssueCard key={issue.id} issue={issue} />
-              ))}
+              {issues.data
+                .filter((issue) => {
+                  return issue.done === displayClosed || issue.done === false;
+                })
+                .map((issue) => (
+                  <IssueCard key={issue.id} issue={issue} />
+                ))}
             </ul>
           ) : (
             <p>Loading...</p>
