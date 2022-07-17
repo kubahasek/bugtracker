@@ -16,9 +16,9 @@ const IssueCard = ({ issue }: Props) => {
       <div className="w-full border-2 border-gray-500 p-5 rounded-lg mt-4 hover:border-gray-50 hover:cursor-pointer transition-all">
         <div className="flex flex-row items-center justify-between">
           <h1>#{addLeadingZeros(issue.id, 3)}</h1>
-          <div>
-            <h1 className="ml-4 dark:text-white">{issue.title}</h1>
-            <p className="ml-4 dark:text-gray-500">{issue.Project.name}</p>
+          <div className="text-left w-4/5 ml-4">
+            <h1 className=" dark:text-white">{issue.title}</h1>
+            <p className="dark:text-gray-500">{issue.Project.name}</p>
           </div>
           {!issue.done ? (
             <div className="badge badge-error gap-2 p-4">Open</div>
