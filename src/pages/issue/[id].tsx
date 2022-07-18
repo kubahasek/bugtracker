@@ -70,7 +70,7 @@ const IssueDetail: NextPage = () => {
                 <p className="text-center">{issue.data.Project.name}</p>/
                 <p className="text-center">{issue.data.Category.name}</p>
               </div>
-              <div className="mt-2 p-4 dark:text-white">
+              <div className="mt-2 p-4 break-words dark:text-white">
                 <p className="">{issue.data.content}</p>
               </div>
             </div>
