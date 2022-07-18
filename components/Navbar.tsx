@@ -34,7 +34,6 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">Bugtracker</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">
@@ -47,8 +46,8 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link href="/issue/new">
-          <a className="btn">Add Issue</a>
+        <Link href="/">
+          <h1 className="btn btn-ghost normal-case text-xl">Bugtracker</h1>
         </Link>
       </div>
     </div>
