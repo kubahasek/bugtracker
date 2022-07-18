@@ -47,9 +47,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a href="/issue/new" className="btn">
-          Add Issue
-        </a>
+        <Link href="/issue/new">
+          <a className="btn">Add Issue</a>
+        </Link>
       </div>
     </div>
   );
