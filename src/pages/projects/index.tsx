@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import Link from "next/link";
 import Navbar from "../../../components/Navbar";
 import ProjectCard from "../../../components/ProjectCard";
 import { trpc } from "../../utils/trpc";
@@ -23,6 +24,11 @@ const Home: NextPage = () => {
         <h1 className="dark:text-white text-3xl text-center uppercase">
           Projects
         </h1>
+        <div className="text-center mx-auto mt-4 mb-4">
+          <div className="btn">
+            <Link href="/issue/new">Add project</Link>
+          </div>
+        </div>
         <div className="w-9/12 mx-auto">
           {project.data && (
             <ul>
