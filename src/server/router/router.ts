@@ -49,6 +49,17 @@ export const Router = createRouter()
       return issue;
     },
   })
+  .mutation("createCategory", {
+    input: z.object({
+      name: z.string().min(1),
+    }),
+    async resolve({ input }) {
+      const category = await db.category.create({
+        data: input,
+      });
+      return { ok: true };
+    },
+  })
   .mutation("solveIssue", {
     input: z.object({
       id: z.number().min(1),
