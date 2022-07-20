@@ -60,6 +60,17 @@ export const Router = createRouter()
       return { ok: true };
     },
   })
+  .mutation("createProject", {
+    input: z.object({
+      name: z.string().min(1),
+    }),
+    async resolve({ input }) {
+      const project = await db.project.create({
+        data: input,
+      });
+      return { ok: true };
+    },
+  })
   .mutation("solveIssue", {
     input: z.object({
       id: z.number().min(1),
