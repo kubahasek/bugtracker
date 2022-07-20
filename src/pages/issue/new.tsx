@@ -12,16 +12,26 @@ const New: NextPage = () => {
   const mutation = trpc.useMutation(["app.createIssue"]);
   const router = useRouter();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const session = await getSession();
-    mutation.mutate({
-      title: event.target.title.value,
-      userid: session.userId,
-      content: event.target.content.value,
-      categoryId: parseInt(event.target.categoryId.value),
-      projectId: parseInt(event.target.projectId.value),
-    });
+    const target = e.target as typeof e.target & {
+      title: { value: string };
+      content: { value: string };
+      categoryId: { value: string };
+      projectId: { value: string };
+    };
+    if (session && typeof session.userId === "number") {
+      mutation.mutate({
+        title: target.title.value,
+        userid: session.userId,
+        content: target.content.value,
+        categoryId: parseInt(target.categoryId.value),
+        projectId: parseInt(target.projectId.value),
+      });
+    } else {
+      router.push("/login");
+    }
   };
 
   if (mutation.isSuccess) {
