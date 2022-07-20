@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/dist/server/api-utils";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import IssueCard from "../../components/IssueCard";
@@ -28,6 +29,11 @@ const Home: NextPage = () => {
           <h1 className="dark:text-white text-3xl text-center uppercase">
             Issues
           </h1>
+          <div className="text-center mx-auto mt-4 mb-4">
+            <div className="btn">
+              <Link href="/issue/new">Add issue</Link>
+            </div>
+          </div>
           <div className="text-center mb-4">
             <label htmlFor="" className="flex flex-col items-center">
               Display closed issues
