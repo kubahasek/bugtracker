@@ -7,6 +7,7 @@ import Navbar from "../../../components/Navbar";
 import { trpc } from "../../utils/trpc";
 
 const New: NextPage = () => {
+  const session = useSession({ required: true }); //protected route
   const categories = trpc.useQuery(["app.getCategories"]);
   const projects = trpc.useQuery(["app.getProjects"]);
   const mutation = trpc.useMutation(["app.createIssue"]);

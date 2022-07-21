@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { z } from "zod";
@@ -10,6 +11,7 @@ function addLeadingZeros(num: number, totalLength: number) {
 }
 
 const IssueDetail: NextPage = () => {
+  const session = useSession({ required: true }); //protected route
   const router = useRouter();
   const { id } = router.query;
   if (!id) {

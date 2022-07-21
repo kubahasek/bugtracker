@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { FormEvent } from "react";
@@ -6,6 +7,7 @@ import Navbar from "../../../components/Navbar";
 import { trpc } from "../../utils/trpc";
 
 const New: NextPage = () => {
+  const session = useSession({ required: true }); //protected route
   const mutation = trpc.useMutation(["app.createCategory"]);
   const router = useRouter();
 
